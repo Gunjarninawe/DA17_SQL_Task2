@@ -1,57 +1,83 @@
-create table Inspector (
-    inspector_id SERIAL primary key,
-    first_name varchar,
-    last_name varchar,
-    date_of_birth DATE,
-    rank varchar,
-    department varchar
+
+create table subj_Teach(
+
+subj_id int primary key,
+name varchar not null,
+no_units int default 5,
+isActive boolean DEFAULT TRUE
+
+)
+insert into  subj_Teach(subj_id,name,no_units,isActive )values(11,'Science',4,true)
+insert into  subj_Teach(subj_id,name,no_units,isActive )values(12,'Maths',4,true)
+insert into  subj_Teach(subj_id,name,no_units,isActive )values(13,'Hindi',4,true)
+insert into  subj_Teach(subj_id,name,no_units,isActive )values(14,'Marathi',4,false)
+
+select * from subj_Teach
+
+
+create table INSTRUCTORR (
+
+INS_ID int primary key,
+Gender varchar not null,
+NAME varchar not null,
+subj_id int not null,
+CONSTRAINT INSTRUCTOR_subjTeach_subjid FOREIGN KEY (subj_id) REFERENCES subj_Teach(subj_id)	
 )
 
-select * from Inspector
+insert into INSTRUCTORR (INS_ID,NAME,Gender,subj_id) values (01,'sharda','F',11)
+insert into INSTRUCTORR (INS_ID,NAME,Gender,subj_id)values (02,'Gauri','F',12)
+insert into INSTRUCTORR (INS_ID,NAME,Gender,subj_id)values (03,'Sagar','M',13)
+insert into INSTRUCTORR (INS_ID,NAME,Gender,subj_id)values (04,'Uday','M',14)
 
-insert into Inspector (first_name, last_name, date_of_birth, rank, department) values
-('John', 'Doe', '1980-04-15', 'Chief Inspector', 'Homicide'),
-('Jane', 'Smith', '1985-07-20', 'Inspector', 'Fraud'),
-('Robert', 'Johnson', '1977-11-25', 'Senior Inspector', 'Narcotics'),
-('Emily', 'Williams', '1990-02-10', 'Inspector', 'Cyber Crime'),
-('Michael', 'Brown', '1982-03-30', 'Inspector', 'Robbery')
+select *from INSTRUCTORR
 
 
-create table Police (
-    police_id SERIAL primary key,
-    first_name varchar,
-    last_name varchar,
-    date_of_birth DATE,
-    badge_number varchar,
-    inspector_id int,
-    FOREIGN KEY (inspector_id) REFERENCES Inspector(inspector_id)
+CREATE TABLE course(
+
+course_id int primary key,
+name varchar not null,
+isActive boolean DEFAULT true)
+
+insert into course (course_id,name,isActive)values (11,'Data Analyst',true)
+insert into course (course_id,name,isActive)values (12,'JAVA FULL STACK',true)
+insert into course (course_id,name,isActive)values (13,'MERN FULL STACK',false)
+insert into course (course_id,name,isActive)values (14,'SQL',true)
+
+select * from course 
+
+
+
+create table STUDENTT (
+
+STD_ID int primary key,
+NAME varchar not null,
+Gender varchar not null,
+course_id int NOT NULL,
+CONSTRAINT STUDENT_COURSE_courseid FOREIGN KEY (course_id)REFERENCES course(course_id)
 )
 
-select * from Police
+insert into STUDENTT ( STD_ID,NAME,Gender,course_id)values (01,'Praful','M',11)
+insert into STUDENTT ( STD_ID,NAME,Gender,course_id)values (02,'Rahul','M',12)
+insert into STUDENTT ( STD_ID,NAME,Gender,course_id)values (03,'Shruti','F',13)
+insert into STUDENTT ( STD_ID,NAME,Gender,course_id)values (04,'Pankaj','M',14)
 
-insert into Police (first_name, last_name, date_of_birth, badge_number, inspector_id) values
-('James', 'Davis', '1990-05-12', 'B1234', 1),
-('Sarah', 'Miller', '1988-09-22', 'B5678', 2),
-('David', 'Wilson', '1993-01-03', 'B9876', 3),
-('Olivia', 'Moore', '1991-06-18', 'B3456', 4),
-('William', 'Taylor', '1994-12-25', 'B2468', 5)
+select * from STUDENTT
 
 
-create table Criminal (
-    criminal_id SERIAL primary key,
-    first_name varchar,
-    last_name varchar,
-    crime_committed varchar,
-    arrest_date DATE,
-    police_id int,
-    FOREIGN KEY (police_id) REFERENCES Police(police_id)
+create table collegee (
+
+COLL_ID Iint primary key ,
+NAME varchar not null,
+INS_ID int not null,
+STD_ID int not null,
+CONSTRAINT college_INSTRUCTOR_INSID FOREIGN KEY (INS_ID)REFERENCES INSTRUCTORR(INS_ID ),
+CONSTRAINT college_STUDENTT_STDID FOREIGN KEY (STD_ID)REFERENCES STUDENTT(STD_ID)
 )
 
-select * from Criminal
 
-insert into Criminal (first_name, last_name, crime_committed, arrest_date, police_id) values
-('Alex', 'Adams', 'Theft', '2025-01-12', 1),
-('Eva', 'Carter', 'Fraud', '2025-02-14', 2),
-('Jack', 'Garcia', 'Drug Trafficking', '2025-03-05', 3),
-('Liam', 'Martinez', 'Hacking', '2025-03-20', 4),
-('Sophia', 'Lee', 'Armed Robbery', '2025-04-01', 5)
+insert into collegee(COLL_ID,NAME,INS_ID,STD_ID)values(232434,'RCOEM',01,01)
+insert into collegee(COLL_ID,NAME,INS_ID,STD_ID)values(782434,'YCCE',02,02)
+insert into collegee(COLL_ID,NAME,INS_ID,STD_ID)values(4234,'IIT',03,03)
+insert into collegee(COLL_ID,NAME,INS_ID,STD_ID)values(962434,'VNIT',04,04)
+
+select * from collegee
